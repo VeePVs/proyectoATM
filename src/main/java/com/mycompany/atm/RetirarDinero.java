@@ -52,7 +52,9 @@ public class RetirarDinero extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         label_nombre = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        text_ingresar = new javax.swing.JTextField();
+        txt_retirar = new javax.swing.JTextField();
+        btn_Aceptar = new javax.swing.JButton();
+        btn_Cancelar1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -72,49 +74,129 @@ public class RetirarDinero extends javax.swing.JPanel {
         jLabel1.setText("¿Cúanto vas a retirar?: ");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
 
-        text_ingresar.setBackground(new java.awt.Color(204, 204, 204));
-        text_ingresar.setFont(new java.awt.Font("Unispace", 0, 18)); // NOI18N
-        text_ingresar.setForeground(new java.awt.Color(0, 0, 0));
-        text_ingresar.setBorder(null);
-        text_ingresar.addActionListener(new java.awt.event.ActionListener() {
+        txt_retirar.setBackground(new java.awt.Color(204, 204, 204));
+        txt_retirar.setFont(new java.awt.Font("Unispace", 0, 18)); // NOI18N
+        txt_retirar.setForeground(new java.awt.Color(0, 0, 0));
+        txt_retirar.setBorder(null);
+        txt_retirar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                text_ingresarActionPerformed(evt);
+                txt_retirarActionPerformed(evt);
             }
         });
-        text_ingresar.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_retirar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                text_ingresarKeyPressed(evt);
+                txt_retirarKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                text_ingresarKeyReleased(evt);
+                txt_retirarKeyReleased(evt);
             }
         });
-        add(text_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 270, 50));
+        add(txt_retirar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 270, 50));
+
+        btn_Aceptar.setBackground(new java.awt.Color(255, 255, 255));
+        btn_Aceptar.setFont(new java.awt.Font("Unispace", 2, 14)); // NOI18N
+        btn_Aceptar.setForeground(new java.awt.Color(0, 0, 0));
+        btn_Aceptar.setText("Aceptar");
+        btn_Aceptar.setBorder(null);
+        btn_Aceptar.setBorderPainted(false);
+        btn_Aceptar.setContentAreaFilled(false);
+        btn_Aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AceptarActionPerformed(evt);
+            }
+        });
+        add(btn_Aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, 170, 40));
+
+        btn_Cancelar1.setBackground(new java.awt.Color(255, 255, 255));
+        btn_Cancelar1.setFont(new java.awt.Font("Unispace", 2, 14)); // NOI18N
+        btn_Cancelar1.setForeground(new java.awt.Color(0, 0, 0));
+        btn_Cancelar1.setText("Cancelar");
+        btn_Cancelar1.setBorder(null);
+        btn_Cancelar1.setBorderPainted(false);
+        btn_Cancelar1.setContentAreaFilled(false);
+        btn_Cancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Cancelar1ActionPerformed(evt);
+            }
+        });
+        add(btn_Cancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 360, 170, 40));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void text_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_ingresarActionPerformed
+    private void txt_retirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_retirarActionPerformed
 
-    }//GEN-LAST:event_text_ingresarActionPerformed
+    }//GEN-LAST:event_txt_retirarActionPerformed
 
-    private void text_ingresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_text_ingresarKeyPressed
+    private void txt_retirarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_retirarKeyPressed
 
-    }//GEN-LAST:event_text_ingresarKeyPressed
+    }//GEN-LAST:event_txt_retirarKeyPressed
 
-    private void text_ingresarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_text_ingresarKeyReleased
+    private void txt_retirarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_retirarKeyReleased
         try {
-            if (Character.getNumericValue(text_ingresar.getText().charAt(text_ingresar.getText().length() - 1)) >= 0 && Character.getNumericValue(text_ingresar.getText().charAt(text_ingresar.getText().length() - 1)) <= 9) {
+            if (Character.getNumericValue(txt_retirar.getText().charAt(txt_retirar.getText().length() - 1)) >= 0 && Character.getNumericValue(txt_retirar.getText().charAt(txt_retirar.getText().length() - 1)) <= 9) {
             } else {
                 JOptionPane.showMessageDialog(null, "ERROR, no se aceptan caracteres, solo numeros.");
             }
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_text_ingresarKeyReleased
+    }//GEN-LAST:event_txt_retirarKeyReleased
+
+    private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estas segure que quieres retirar "+txt_retirar.getText()+"$?");
+        int Saldo;
+        
+        if (confirmacion == 0) {
+            try {
+                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
+                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = " + id_cliente);
+                ResultSet rs = pst2.executeQuery();
+
+                if (rs.next()) {
+                    Saldo = Integer.parseInt(rs.getString("Saldo")) - Integer.parseInt(txt_retirar.getText());
+                    if (Saldo < 0) {
+                        JOptionPane.showMessageDialog(null, "ERROR. No cuentas con el saldo suficiente.");
+                    } else {
+                        PreparedStatement pst = cn.prepareStatement("UPDATE lista_clientes set Saldo = ? WHERE ID = " + id_cliente);
+                        pst.setString(1, String.valueOf(Saldo));
+                        pst.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Actualización exitosa.");
+
+                        VerSaldo vs = new VerSaldo(id_cliente, contenedorPN);
+                        contenedorPN.removeAll();
+                        contenedorPN.setLocation(0, 0);
+                        contenedorPN.setSize(800, 460);
+                        contenedorPN.add(vs);
+                        contenedorPN.revalidate();
+                        contenedorPN.repaint();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "ERROR, intenta nuevamente");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else if (confirmacion == 2) {
+            Menu v1 = new Menu(contenedorPN);
+
+            contenedorPN.removeAll();
+            contenedorPN.setLocation(0, 0);
+            contenedorPN.setSize(800, 460);
+            contenedorPN.add(v1);
+            contenedorPN.revalidate();
+            contenedorPN.repaint();
+        }
+    }//GEN-LAST:event_btn_AceptarActionPerformed
+
+    private void btn_Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Cancelar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Cancelar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Aceptar;
+    private javax.swing.JButton btn_Cancelar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel label_nombre;
-    private javax.swing.JTextField text_ingresar;
+    private javax.swing.JTextField txt_retirar;
     // End of variables declaration//GEN-END:variables
 }
