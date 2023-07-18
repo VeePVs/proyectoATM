@@ -316,7 +316,14 @@ public class ValidacionATM extends javax.swing.JPanel {
             contenedorPN.repaint();
         }
         else if(nextWindow==1){
+            RetirarDinero withdrawCash = new RetirarDinero(Integer.parseInt(campo_ID.getText()),contenedorPN);
             
+            contenedorPN.removeAll();
+            contenedorPN.setLocation(0, 0);
+            contenedorPN.setSize(800, 460);
+            contenedorPN.add(withdrawCash);
+            contenedorPN.revalidate();
+            contenedorPN.repaint();
         }
         else if(nextWindow==2){
             VerSaldo vs = new VerSaldo(Integer.parseInt(campo_ID.getText()), contenedorPN);
