@@ -162,6 +162,16 @@ public class IngresarDinero extends javax.swing.JPanel {
                     pst.executeUpdate();
 
                     JOptionPane.showMessageDialog(null, "Actualización exitosa.");
+
+                    VerSaldo vs = new VerSaldo(id_cliente, contenedorPN);
+
+                    contenedorPN.removeAll();
+                    contenedorPN.setLocation(0, 0);
+                    contenedorPN.setSize(800, 460);
+                    contenedorPN.add(vs);
+                    contenedorPN.revalidate();
+                    contenedorPN.repaint();
+
                 } else {
                     JOptionPane.showMessageDialog(null, "ERROR, intenta nuevamente");
                 }
