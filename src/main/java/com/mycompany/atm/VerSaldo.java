@@ -117,7 +117,14 @@ public class VerSaldo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
+        Menu v1 = new Menu(contenedorPN);
         
+        contenedorPN.removeAll();
+        contenedorPN.setLocation(0, 0);
+        contenedorPN.setSize(800,460);
+        contenedorPN.add(v1);
+        contenedorPN.revalidate();
+        contenedorPN.repaint();
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
 
