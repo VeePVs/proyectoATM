@@ -6,6 +6,14 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  *
@@ -278,56 +286,68 @@ public class ValidacionATM extends javax.swing.JPanel {
             try {
                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
                 PreparedStatement pst = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
-                
-                pst.setString(1, campo_ID.getText());
-                
-                ResultSet rs = pst.executeQuery();
-                
-                pst = cn.prepareStatement("SELECT * FROM lista_clientes WHERE Clave = ?");
-                pst.setString(1, campo_Clave.getText());
-                
-                ResultSet rs2 = pst.executeQuery();
-                
-                if (rs.next() && rs2.next()) {
-                    nextWindow(validacionPantalla);
+
+                try {
+                    final String claveEncriptacion = "Never gonna give you up, never gonna let you down";
+                    String datosOriginalesID = campo_ID.getText();
+                    String datosOriginalesClave = campo_Clave.getText();
+
+                    encriptadoAES encriptador = new encriptadoAES();
+                    String encriptadoID = encriptador.encriptar(datosOriginalesID, claveEncriptacion);
+                    String encriptadoClave = encriptador.encriptar(datosOriginalesClave, claveEncriptacion);
+                    
+                    System.out.println(encriptadoClave);
+                    System.out.println(encriptadoID);
+
+                    pst.setString(1, encriptadoID);
+
+                    ResultSet rs = pst.executeQuery();
+
+                    pst = cn.prepareStatement("SELECT * FROM lista_clientes WHERE Clave = ?");
+                    pst.setString(1, encriptadoClave);
+
+                    ResultSet rs2 = pst.executeQuery();
+
+                    if (rs.next() && rs2.next()) {
+                        nextWindow(validacionPantalla);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No existe dicha ID o contraseña incorrecta.");
+                    }
+
+                } catch (UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException ex) {
+                    Logger.getLogger(encriptadoAES.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                else{
-                    JOptionPane.showMessageDialog(null, "No existe dicha ID o contraseña incorrecta.");
-                }
-                
+
             } catch (Exception e) {
                 System.out.println(e);
             }
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "La clave debe de ser 4 digitos");
         }
     }//GEN-LAST:event_btn_ingresarActionPerformed
 
     public void nextWindow(int nextWindow) {
         if (nextWindow == 0) {
-            IngresarDinero addCash = new IngresarDinero(Integer.parseInt(campo_ID.getText()),contenedorPN);
-            
+            IngresarDinero addCash = new IngresarDinero(Integer.parseInt(campo_ID.getText()), contenedorPN);
+
             contenedorPN.removeAll();
             contenedorPN.setLocation(0, 0);
             contenedorPN.setSize(800, 460);
             contenedorPN.add(addCash);
             contenedorPN.revalidate();
             contenedorPN.repaint();
-        }
-        else if(nextWindow==1){
-            RetirarDinero withdrawCash = new RetirarDinero(Integer.parseInt(campo_ID.getText()),contenedorPN);
-            
+        } else if (nextWindow == 1) {
+            RetirarDinero withdrawCash = new RetirarDinero(Integer.parseInt(campo_ID.getText()), contenedorPN);
+
             contenedorPN.removeAll();
             contenedorPN.setLocation(0, 0);
             contenedorPN.setSize(800, 460);
             contenedorPN.add(withdrawCash);
             contenedorPN.revalidate();
             contenedorPN.repaint();
-        }
-        else if(nextWindow==2){
+        } else if (nextWindow == 2) {
             VerSaldo vs = new VerSaldo(Integer.parseInt(campo_ID.getText()), contenedorPN);
-            
+
             contenedorPN.removeAll();
             contenedorPN.setLocation(0, 0);
             contenedorPN.setSize(800, 460);
@@ -336,7 +356,14 @@ public class ValidacionATM extends javax.swing.JPanel {
             contenedorPN.repaint();
         }
         else if (nextWindow==3) {
+            VerMovimientos vm = new VerMovimientos(Integer.parseInt(campo_ID.getText()), contenedorPN);
             
+            contenedorPN.removeAll();
+            contenedorPN.setLocation(0, 0);
+            contenedorPN.setSize(800, 460);
+            contenedorPN.add(vm);
+            contenedorPN.revalidate();
+            contenedorPN.repaint();
         }
         else{
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error, intenta nuevamente.");

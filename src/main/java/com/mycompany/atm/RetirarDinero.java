@@ -187,7 +187,14 @@ public class RetirarDinero extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
     private void btn_Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Cancelar1ActionPerformed
-        // TODO add your handling code here:
+        Menu v1 = new Menu(contenedorPN);
+        
+        contenedorPN.removeAll();
+        contenedorPN.setLocation(0, 0);
+        contenedorPN.setSize(800,460);
+        contenedorPN.add(v1);
+        contenedorPN.revalidate();
+        contenedorPN.repaint();
     }//GEN-LAST:event_btn_Cancelar1ActionPerformed
 
 
