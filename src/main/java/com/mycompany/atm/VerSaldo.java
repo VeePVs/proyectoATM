@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.mycompany.atm;
 
 import java.sql.Connection;
@@ -15,12 +11,12 @@ import javax.swing.JPanel;
  * @author Vee Pabuence
  */
 public class VerSaldo extends javax.swing.JPanel {
-    int id_cliente;
+    String id_cliente;
     JPanel contenedorPN = new JPanel();
     /**
      * Creates new form VerSaldo
      */
-    public VerSaldo(int ID, JPanel pn) {
+    public VerSaldo(String ID, JPanel pn) {
         initComponents();
         id_cliente = ID;
         contenedorPN = pn;
@@ -29,12 +25,13 @@ public class VerSaldo extends javax.swing.JPanel {
         
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = " + id_cliente);
+            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+            pst2.setString(1, ID);
             ResultSet rs = pst2.executeQuery();
 
             if (rs.next()) {
                 label_nombre.setText(label_nombre.getText() + rs.getString("Nombre"));
-                label_saldo.setText(label_saldo.getText()+rs.getString("Saldo")+"$");
+                label_saldo.setText(label_saldo.getText()+"$"+rs.getString("Saldo"));
             }
         } catch (Exception e) {
             System.out.println(e);

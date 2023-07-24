@@ -12,12 +12,12 @@ import javax.swing.JPanel;
  * @author Vee Pabuence
  */
 public class VerMovimientos extends javax.swing.JPanel {
-    int id_cliente;
+    String id_cliente;
     JPanel contenedorPN = new JPanel();
     /**
      * Creates new form VerMovimientos
      */
-    public VerMovimientos(int ID, JPanel pn) {
+    public VerMovimientos(String ID, JPanel pn) {
         initComponents();
         id_cliente = ID;
         contenedorPN = pn;

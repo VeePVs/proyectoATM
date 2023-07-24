@@ -280,7 +280,10 @@ public class ValidacionATM extends javax.swing.JPanel {
     private void campo_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_IDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campo_IDActionPerformed
-
+    
+    final String claveEncriptacion = "Never gonna give you up, never gonna let you down";
+    String encriptadoID;
+    
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         if (campo_Clave.getText().length() == 4) {
             try {
@@ -288,17 +291,14 @@ public class ValidacionATM extends javax.swing.JPanel {
                 PreparedStatement pst = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
 
                 try {
-                    final String claveEncriptacion = "Never gonna give you up, never gonna let you down";
+                    
                     String datosOriginalesID = campo_ID.getText();
                     String datosOriginalesClave = campo_Clave.getText();
 
                     encriptadoAES encriptador = new encriptadoAES();
-                    String encriptadoID = encriptador.encriptar(datosOriginalesID, claveEncriptacion);
+                    encriptadoID = encriptador.encriptar(datosOriginalesID, claveEncriptacion);
                     String encriptadoClave = encriptador.encriptar(datosOriginalesClave, claveEncriptacion);
                     
-                    System.out.println(encriptadoClave);
-                    System.out.println(encriptadoID);
-
                     pst.setString(1, encriptadoID);
 
                     ResultSet rs = pst.executeQuery();
@@ -328,7 +328,7 @@ public class ValidacionATM extends javax.swing.JPanel {
 
     public void nextWindow(int nextWindow) {
         if (nextWindow == 0) {
-            IngresarDinero addCash = new IngresarDinero(Integer.parseInt(campo_ID.getText()), contenedorPN);
+            IngresarDinero addCash = new IngresarDinero(encriptadoID, contenedorPN);
 
             contenedorPN.removeAll();
             contenedorPN.setLocation(0, 0);
@@ -337,7 +337,7 @@ public class ValidacionATM extends javax.swing.JPanel {
             contenedorPN.revalidate();
             contenedorPN.repaint();
         } else if (nextWindow == 1) {
-            RetirarDinero withdrawCash = new RetirarDinero(Integer.parseInt(campo_ID.getText()), contenedorPN);
+            RetirarDinero withdrawCash = new RetirarDinero(encriptadoID, contenedorPN);
 
             contenedorPN.removeAll();
             contenedorPN.setLocation(0, 0);
@@ -346,7 +346,7 @@ public class ValidacionATM extends javax.swing.JPanel {
             contenedorPN.revalidate();
             contenedorPN.repaint();
         } else if (nextWindow == 2) {
-            VerSaldo vs = new VerSaldo(Integer.parseInt(campo_ID.getText()), contenedorPN);
+            VerSaldo vs = new VerSaldo(encriptadoID, contenedorPN);
 
             contenedorPN.removeAll();
             contenedorPN.setLocation(0, 0);
@@ -356,7 +356,7 @@ public class ValidacionATM extends javax.swing.JPanel {
             contenedorPN.repaint();
         }
         else if (nextWindow==3) {
-            VerMovimientos vm = new VerMovimientos(Integer.parseInt(campo_ID.getText()), contenedorPN);
+            VerMovimientos vm = new VerMovimientos(encriptadoID, contenedorPN);
             
             contenedorPN.removeAll();
             contenedorPN.setLocation(0, 0);

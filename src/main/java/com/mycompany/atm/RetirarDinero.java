@@ -16,12 +16,12 @@ import javax.swing.JPanel;
  * @author Vee Pabuence
  */
 public class RetirarDinero extends javax.swing.JPanel {
-    int id_cliente;
+    String id_cliente;
     JPanel contenedorPN = new JPanel();
     /**
      * Creates new form RetirarDinero
      */
-    public RetirarDinero(int ID, JPanel pn) {
+    public RetirarDinero(String ID, JPanel pn) {
         initComponents();
         id_cliente = ID;
         contenedorPN = pn;
@@ -29,9 +29,12 @@ public class RetirarDinero extends javax.swing.JPanel {
         setVisible(true);
         
         try {
+            System.out.println(id_cliente);
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = " + id_cliente);
+            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+            pst2.setString(1, ID);
             ResultSet rs = pst2.executeQuery();
+
             if (rs.next()) {
                 label_nombre.setText(label_nombre.getText() + rs.getString("Nombre"));
             }
@@ -147,7 +150,8 @@ public class RetirarDinero extends javax.swing.JPanel {
         if (confirmacion == 0) {
             try {
                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = " + id_cliente);
+                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+                pst2.setString(1, id_cliente);
                 ResultSet rs = pst2.executeQuery();
 
                 if (rs.next()) {
@@ -155,8 +159,9 @@ public class RetirarDinero extends javax.swing.JPanel {
                     if (Saldo < 0) {
                         JOptionPane.showMessageDialog(null, "ERROR. No cuentas con el saldo suficiente.");
                     } else {
-                        PreparedStatement pst = cn.prepareStatement("UPDATE lista_clientes set Saldo = ? WHERE ID = " + id_cliente);
+                        PreparedStatement pst = cn.prepareStatement("UPDATE lista_clientes set Saldo = ? WHERE ID = ?");
                         pst.setString(1, String.valueOf(Saldo));
+                        pst.setString(2, id_cliente);
                         pst.executeUpdate();
                         JOptionPane.showMessageDialog(null, "Actualización exitosa.");
 

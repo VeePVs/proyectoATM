@@ -9,13 +9,13 @@ import javax.swing.JPanel;
  * @author Vee Pabuence
  */
 public class IngresarDinero extends javax.swing.JPanel {
-    int id_cliente;
+    String id_cliente;
     JPanel contenedorPN = new JPanel();
     
     /**
      * Creates new form IngresarDinero
      */
-    public IngresarDinero(int ID, JPanel pn) {
+    public IngresarDinero(String ID, JPanel pn) {
         initComponents();
         id_cliente = ID;
         contenedorPN = pn;
@@ -23,8 +23,10 @@ public class IngresarDinero extends javax.swing.JPanel {
         setVisible(true);
 
         try {
+            System.out.println(id_cliente);
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = " + id_cliente);
+            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+            pst2.setString(1, ID);
             ResultSet rs = pst2.executeQuery();
 
             if (rs.next()) {
@@ -46,7 +48,7 @@ public class IngresarDinero extends javax.swing.JPanel {
 
         label_nombre = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        text_ingresar = new javax.swing.JTextField();
+        txt_ingresar = new javax.swing.JTextField();
         btn_Cancelar = new javax.swing.JButton();
         btn_Aceptar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -64,24 +66,24 @@ public class IngresarDinero extends javax.swing.JPanel {
         jLabel1.setText("¿Cúanto vas a ingresar?: ");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, -1));
 
-        text_ingresar.setBackground(new java.awt.Color(204, 204, 204));
-        text_ingresar.setFont(new java.awt.Font("Unispace", 0, 18)); // NOI18N
-        text_ingresar.setForeground(new java.awt.Color(0, 0, 0));
-        text_ingresar.setBorder(null);
-        text_ingresar.addActionListener(new java.awt.event.ActionListener() {
+        txt_ingresar.setBackground(new java.awt.Color(204, 204, 204));
+        txt_ingresar.setFont(new java.awt.Font("Unispace", 0, 18)); // NOI18N
+        txt_ingresar.setForeground(new java.awt.Color(0, 0, 0));
+        txt_ingresar.setBorder(null);
+        txt_ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                text_ingresarActionPerformed(evt);
+                txt_ingresarActionPerformed(evt);
             }
         });
-        text_ingresar.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_ingresar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                text_ingresarKeyPressed(evt);
+                txt_ingresarKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                text_ingresarKeyReleased(evt);
+                txt_ingresarKeyReleased(evt);
             }
         });
-        add(text_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, 270, 50));
+        add(txt_ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, 270, 50));
 
         btn_Cancelar.setBackground(new java.awt.Color(255, 255, 255));
         btn_Cancelar.setFont(new java.awt.Font("Unispace", 2, 14)); // NOI18N
@@ -117,21 +119,21 @@ public class IngresarDinero extends javax.swing.JPanel {
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void text_ingresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_text_ingresarKeyPressed
-    }//GEN-LAST:event_text_ingresarKeyPressed
+    private void txt_ingresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ingresarKeyPressed
+    }//GEN-LAST:event_txt_ingresarKeyPressed
 
-    private void text_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_ingresarActionPerformed
-    }//GEN-LAST:event_text_ingresarActionPerformed
+    private void txt_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_ingresarActionPerformed
+    }//GEN-LAST:event_txt_ingresarActionPerformed
 
-    private void text_ingresarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_text_ingresarKeyReleased
+    private void txt_ingresarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ingresarKeyReleased
         try {
-            if (Character.getNumericValue(text_ingresar.getText().charAt(text_ingresar.getText().length() - 1)) >= 0 && Character.getNumericValue(text_ingresar.getText().charAt(text_ingresar.getText().length() - 1)) <= 9) {
+            if (Character.getNumericValue(txt_ingresar.getText().charAt(txt_ingresar.getText().length() - 1)) >= 0 && Character.getNumericValue(txt_ingresar.getText().charAt(txt_ingresar.getText().length() - 1)) <= 9) {
             } else {
                 JOptionPane.showMessageDialog(null, "ERROR, no se aceptan caracteres, solo numeros.");
             }
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_text_ingresarKeyReleased
+    }//GEN-LAST:event_txt_ingresarKeyReleased
 
     private void btn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CancelarActionPerformed
         Menu v1 = new Menu(contenedorPN);
@@ -145,20 +147,22 @@ public class IngresarDinero extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_CancelarActionPerformed
 
     private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estas segure que quieres ingresar "+text_ingresar.getText()+"$?");
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estas segure que quieres ingresar "+txt_ingresar.getText()+"$?");
         int Saldo;
         
         if (confirmacion == 0) {
             try {
                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = " + id_cliente);
+                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+                pst2.setString(1, id_cliente);
                 ResultSet rs = pst2.executeQuery();
 
                 if (rs.next()) {
-                    Saldo = Integer.parseInt(rs.getString("Saldo")) + Integer.parseInt(text_ingresar.getText());
-                    PreparedStatement pst = cn.prepareStatement("UPDATE lista_clientes set Saldo = ? WHERE ID = " + id_cliente);
+                    Saldo = Integer.parseInt(rs.getString("Saldo")) + Integer.parseInt(txt_ingresar.getText());
+                    PreparedStatement pst = cn.prepareStatement("UPDATE lista_clientes set Saldo = ? WHERE ID = ?");
 
                     pst.setString(1, String.valueOf(Saldo));
+                    pst.setString(2, id_cliente);
                     pst.executeUpdate();
 
                     JOptionPane.showMessageDialog(null, "Actualización exitosa.");
@@ -197,6 +201,6 @@ public class IngresarDinero extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel label_nombre;
-    private javax.swing.JTextField text_ingresar;
+    private javax.swing.JTextField txt_ingresar;
     // End of variables declaration//GEN-END:variables
 }
