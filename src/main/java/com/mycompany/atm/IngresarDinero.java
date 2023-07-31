@@ -24,13 +24,13 @@ public class IngresarDinero extends javax.swing.JPanel {
 
         try {
             System.out.println(id_cliente);
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/mydb", "vee", "123");
+            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
             pst2.setString(1, ID);
             ResultSet rs = pst2.executeQuery();
 
             if (rs.next()) {
-                label_nombre.setText(label_nombre.getText() + rs.getString("Nombre"));
+                label_nombre.setText(label_nombre.getText() + rs.getString("nombre"));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -151,15 +151,15 @@ public class IngresarDinero extends javax.swing.JPanel {
         int Saldo;
         
         if (confirmacion == 0) {
-            try {
-                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+            try {   
+                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/mydb", "vee", "123");
+                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM cuenta WHERE idUsuario = ?");
                 pst2.setString(1, id_cliente);
                 ResultSet rs = pst2.executeQuery();
 
                 if (rs.next()) {
-                    Saldo = Integer.parseInt(rs.getString("Saldo")) + Integer.parseInt(txt_ingresar.getText());
-                    PreparedStatement pst = cn.prepareStatement("UPDATE lista_clientes set Saldo = ? WHERE ID = ?");
+                    Saldo = Integer.parseInt(rs.getString("saldo")) + Integer.parseInt(txt_ingresar.getText());
+                    PreparedStatement pst = cn.prepareStatement("UPDATE cuenta set saldo = ? WHERE idUsuario = ?");
 
                     pst.setString(1, String.valueOf(Saldo));
                     pst.setString(2, id_cliente);

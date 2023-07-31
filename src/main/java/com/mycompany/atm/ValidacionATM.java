@@ -287,8 +287,8 @@ public class ValidacionATM extends javax.swing.JPanel {
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         if (campo_Clave.getText().length() == 4) {
             try {
-                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-                PreparedStatement pst = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/mydb", "vee", "123");
+                PreparedStatement pst = cn.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
 
                 try {
                     
@@ -303,7 +303,7 @@ public class ValidacionATM extends javax.swing.JPanel {
 
                     ResultSet rs = pst.executeQuery();
 
-                    pst = cn.prepareStatement("SELECT * FROM lista_clientes WHERE Clave = ?");
+                    pst = cn.prepareStatement("SELECT * FROM usuarios WHERE clave = ?");
                     pst.setString(1, encriptadoClave);
 
                     ResultSet rs2 = pst.executeQuery();

@@ -24,14 +24,22 @@ public class VerSaldo extends javax.swing.JPanel {
         setVisible(true);
         
         try {
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/mydb", "vee", "123");
+            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM cuenta WHERE idUsuario = ?");
             pst2.setString(1, ID);
             ResultSet rs = pst2.executeQuery();
 
             if (rs.next()) {
-                label_nombre.setText(label_nombre.getText() + rs.getString("Nombre"));
-                label_saldo.setText(label_saldo.getText()+"$"+rs.getString("Saldo"));
+                label_saldo.setText(label_saldo.getText()+"$"+rs.getString("saldo"));
+                
+                pst2 = cn.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
+                pst2.setString(1, ID);
+                rs = pst2.executeQuery();
+                
+                if(rs.next()){
+                    label_nombre.setText(label_nombre.getText() + rs.getString("nombre")+ " " + rs.getString("apellido") );
+                }
+                
             }
         } catch (Exception e) {
             System.out.println(e);
