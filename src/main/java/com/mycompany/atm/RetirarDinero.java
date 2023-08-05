@@ -30,13 +30,13 @@ public class RetirarDinero extends javax.swing.JPanel {
         
         try {
             System.out.println(id_cliente);
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/mydb", "vee", "123");
+            PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
             pst2.setString(1, ID);
             ResultSet rs = pst2.executeQuery();
 
             if (rs.next()) {
-                label_nombre.setText(label_nombre.getText() + rs.getString("Nombre"));
+                label_nombre.setText(label_nombre.getText() + rs.getString("nombre"));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -149,8 +149,8 @@ public class RetirarDinero extends javax.swing.JPanel {
         
         if (confirmacion == 0) {
             try {
-                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bd_atm", "vee", "123");
-                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM lista_clientes WHERE ID = ?");
+                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3308/mydb", "vee", "123");
+                PreparedStatement pst2 = cn.prepareStatement("SELECT * FROM cuenta WHERE idUsuario = ?");
                 pst2.setString(1, id_cliente);
                 ResultSet rs = pst2.executeQuery();
 
@@ -159,7 +159,7 @@ public class RetirarDinero extends javax.swing.JPanel {
                     if (Saldo < 0) {
                         JOptionPane.showMessageDialog(null, "ERROR. No cuentas con el saldo suficiente.");
                     } else {
-                        PreparedStatement pst = cn.prepareStatement("UPDATE lista_clientes set Saldo = ? WHERE ID = ?");
+                        PreparedStatement pst = cn.prepareStatement("UPDATE cuenta set Saldo = ? WHERE idUsuario = ?");
                         pst.setString(1, String.valueOf(Saldo));
                         pst.setString(2, id_cliente);
                         pst.executeUpdate();
