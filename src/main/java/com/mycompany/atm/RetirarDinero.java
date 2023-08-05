@@ -164,7 +164,13 @@ public class RetirarDinero extends javax.swing.JPanel {
                         pst.setString(2, id_cliente);
                         pst.executeUpdate();
                         JOptionPane.showMessageDialog(null, "Actualización exitosa.");
-
+                        
+                        int idCuenta = Integer.parseInt(rs.getString("id"));
+                        
+                        pst = cn.prepareStatement("INSERT INTO movimientos (retiro, ingreso,idUsuario,idCuenta) VALUES ("+Integer.parseInt(txt_retirar.getText())+" , 0, ?, "+idCuenta+");");
+                        pst.setString(1, id_cliente);
+                        pst.executeUpdate();
+                        
                         VerSaldo vs = new VerSaldo(id_cliente, contenedorPN);
                         contenedorPN.removeAll();
                         contenedorPN.setLocation(0, 0);

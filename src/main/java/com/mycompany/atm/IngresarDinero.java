@@ -167,6 +167,12 @@ public class IngresarDinero extends javax.swing.JPanel {
 
                     JOptionPane.showMessageDialog(null, "Actualización exitosa.");
 
+                    int idCuenta = Integer.parseInt(rs.getString("id"));
+
+                    pst = cn.prepareStatement("INSERT INTO movimientos (retiro, ingreso,idUsuario,idCuenta) VALUES (0 , " + Integer.parseInt(txt_ingresar.getText()) + ", ?, " + idCuenta + ");");
+                    pst.setString(1, id_cliente);
+                    pst.executeUpdate();
+
                     VerSaldo vs = new VerSaldo(id_cliente, contenedorPN);
 
                     contenedorPN.removeAll();
